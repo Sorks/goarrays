@@ -107,15 +107,17 @@ func Intersection[T any](array1, array2 []T) (result []T) {
 
 // slice/array remove duplicate values
 func Distinct[T any](array []T) (result []T) {
-	container := make(map[any]any)
-	for _, v := range array {
-		container[v] = nil
-	}
-	result = make([]T, len(container))
-	var i = 0
-	for k, _ := range container {
-		result[i] = k.(T)
-		i++
+	if n := len(array); array != nil && n != 0 {
+		container := make(map[any]any)
+		for _, v := range array {
+			container[v] = nil
+		}
+		result = make([]T, len(container))
+		var i = 0
+		for k := range container {
+			result[i] = k.(T)
+			i++
+		}
 	}
 	return result
 }
