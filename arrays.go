@@ -1,4 +1,4 @@
-package goarrays
+package arrays
 
 import (
 	"fmt"
@@ -11,13 +11,10 @@ import (
 // Check this value is in the array/slice.
 func In[T any](v T, array []T) bool {
 	if n := len(array); array != nil && n != 0 {
-		i := 0
-		for reflect.DeepEqual(v, array[i]) {
-			i++
-		}
-
-		if i != n {
-			return true
+		for i := 0; i < n; i++ {
+			if reflect.DeepEqual(v, array[i]) {
+				return true
+			}
 		}
 	}
 	return false
@@ -27,13 +24,10 @@ func In[T any](v T, array []T) bool {
 // If not exist return -1 else return index.
 func Index[T any](v T, array []T) int {
 	if n := len(array); array != nil && n != 0 {
-		i := 0
-		for !reflect.DeepEqual(v, array[i]) {
-			i++
-		}
-
-		if i != n {
-			return i
+		for i := 0; i < n; i++ {
+			if reflect.DeepEqual(v, array[i]) {
+				return i
+			}
 		}
 	}
 	return -1
@@ -109,12 +103,13 @@ func Intersection[T any](array1, array2 []T) (result []T) {
 func Distinct[T any](array []T) (result []T) {
 	if n := len(array); array != nil && n != 0 {
 		container := make(map[any]any)
-		for _, v := range array {
-			container[v] = nil
+		for i := 0; i < n; i++ {
+			container[array[i]] = nil
 		}
+
 		result = make([]T, len(container))
 		var i = 0
-		for k := range container {
+		for k, _ := range container {
 			result[i] = k.(T)
 			i++
 		}
