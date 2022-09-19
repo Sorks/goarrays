@@ -13,6 +13,7 @@ func In[T any](v T, array []T) bool {
 	if n := len(array); array != nil && n != 0 {
 		for i := 0; i < n; i++ {
 			if reflect.DeepEqual(v, array[i]) {
+
 				return true
 			}
 		}
@@ -120,12 +121,17 @@ func Distinct[T any](array []T) (result []T) {
 // according to the specified key remove value
 func Remove[T any](array []T, k int) []T {
 	switch {
-	case k < 0:
-		panic(fmt.Sprintf("index out of range [0:%d]", k))
 	case k == 0:
 		array = array[1:]
-	case k > 0 && k < len(array):
+		break
+	case k > 0 && k < len(array)-1:
 		array = append(array[0:k], array[k+1:]...)
+		break
+	case k == len(array):
+		array = array[0:k]
+		break
+	default:
+		panic(fmt.Sprintf("index out of range [%d]", k))
 	}
 	return array
 }
@@ -133,14 +139,17 @@ func Remove[T any](array []T, k int) []T {
 // according to the specified key insert value
 func Insert[T any](array []T, v T, k int) []T {
 	switch {
-	case k < 0:
-		panic(fmt.Sprintf("index out of range [%d]", k))
 	case k == 0:
 		array = append([]T{v}, array...)
+		break
 	case k > 0 && k < len(array):
 		array = append(append(array[0:k], v), array[k:]...)
-	case k >= len(array):
+		break
+	case k == len(array):
 		array = append(array, v)
+		break
+	default:
+		panic(fmt.Sprintf("index out of range [%d]", k))
 	}
 	return array
 }
