@@ -36,8 +36,9 @@ func Index[T any](v T, array []T) int {
 
 // Returns the value of a single column in the input array/slice.
 func Column[T, V any](array []T, k any) any {
-	values := make([]V, len(array))
-	if n := len(array); array != nil && n != 0 {
+	n := len(array)
+	values := make([]V, n)
+	if array != nil && n != 0 {
 		switch reflect.TypeOf(array).Elem().Kind() {
 		case reflect.Slice, reflect.Array:
 			for i := 0; i < n; i++ {
