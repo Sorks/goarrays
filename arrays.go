@@ -128,7 +128,7 @@ func Remove[T any](array []T, k int) []T {
 	case k > 0 && k < len(array)-1:
 		array = append(array[0:k], array[k+1:]...)
 		break
-	case k == len(array):
+	case k == len(array)-1:
 		array = array[0:k]
 		break
 	default:
