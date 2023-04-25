@@ -119,6 +119,17 @@ func Distinct[T any](array []T) (result []T) {
 	return result
 }
 
+func FilterEmpty[T any](array []T) (result []T)  {
+	if n := len(array); n > 0 {
+		for i := 0; i < n; i++ {
+			if !reflect.ValueOf(array[i]).IsZero() {
+				result = append(result, array[i])
+			}
+		}
+	}
+	return result
+}
+
 // according to the specified key remove value
 func Remove[T any](array []T, k int) []T {
 	switch {
